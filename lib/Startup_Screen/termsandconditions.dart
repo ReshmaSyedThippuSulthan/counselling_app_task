@@ -1,7 +1,6 @@
 import 'package:counselling_task/Utils/colors.dart';
-import 'package:flutter_html/flutter_html.dart';
+// import 'package:flutter_html/flutter_html.dart';
 
- 
 import 'package:flutter/material.dart';
 
 class TermsAndService extends StatefulWidget {
@@ -81,7 +80,7 @@ class _TermsAndServiceState extends State<TermsAndService> {
                       const SizedBox(
                         height: 20,
                       ),
-                      Container(child: Html(data: htmlcontent))
+                      // Container(child: Html(data: htmlcontent))
                     ],
                   )
                 ],

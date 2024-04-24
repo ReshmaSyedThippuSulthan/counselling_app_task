@@ -1,8 +1,10 @@
+import 'package:counselling_task/Country_Selection/selection_country1.dart';
 import 'package:counselling_task/Utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class SelectCountry extends StatefulWidget {
+  static const String routeName = "/selectcountry";
   const SelectCountry({super.key});
 
   @override
@@ -54,7 +56,9 @@ class _GetCountryState extends State<SelectCountry> {
                 height: 50,
                 width: 200,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(WelcomeScreen.routeName);
+                  },
                   style: ElevatedButton.styleFrom(
                       shadowColor: Colors.white,
                       backgroundColor: const Color(0xFF212426)),

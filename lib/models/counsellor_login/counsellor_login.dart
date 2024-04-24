@@ -2,20 +2,20 @@ import 'dart:convert';
 
 import 'data.dart';
 
-class TermsOfService {
+class CounsellorLogin {
   bool? status;
   String? message;
   Data? data;
 
-  TermsOfService({this.status, this.message, this.data});
+  CounsellorLogin({this.status, this.message, this.data});
 
   @override
   String toString() {
-    return 'TermsOfService(status: $status, message: $message, data: $data)';
+    return 'CounsellorLogin(status: $status, message: $message, data: $data)';
   }
 
-  factory TermsOfService.fromMap(Map<String, dynamic> data) {
-    return TermsOfService(
+  factory CounsellorLogin.fromMap(Map<String, dynamic> data) {
+    return CounsellorLogin(
       status: data['status'] as bool?,
       message: data['message'] as String?,
       data: data['data'] == null
@@ -32,13 +32,13 @@ class TermsOfService {
 
   /// `dart:convert`
   ///
-  /// Parses the string and returns the resulting Json object as [TermsOfService].
-  factory TermsOfService.fromJson(String data) {
-    return TermsOfService.fromMap(json.decode(data) as Map<String, dynamic>);
+  /// Parses the string and returns the resulting Json object as [CounsellorLogin].
+  factory CounsellorLogin.fromJson(String data) {
+    return CounsellorLogin.fromMap(json.decode(data) as Map<String, dynamic>);
   }
 
   /// `dart:convert`
   ///
-  /// Converts [TermsOfService] to a JSON string.
+  /// Converts [CounsellorLogin] to a JSON string.
   String toJson() => json.encode(toMap());
 }

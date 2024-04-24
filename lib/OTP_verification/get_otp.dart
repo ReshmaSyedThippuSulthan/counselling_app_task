@@ -1,11 +1,17 @@
+import 'package:counselling_task/Country_Selection/selection_country.dart';
 import 'package:counselling_task/Utils/colors.dart';
+import 'package:counselling_task/api_collection/api.dart';
+import 'package:counselling_task/provider/counselling_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
+import 'package:provider/provider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class GetVerifyNumber extends StatefulWidget {
+  static const String routeName = "/getotp";
   const GetVerifyNumber({super.key});
 
   @override
@@ -13,6 +19,7 @@ class GetVerifyNumber extends StatefulWidget {
 }
 
 class _GetCountryState extends State<GetVerifyNumber> {
+  TextEditingController phoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +80,20 @@ class _GetCountryState extends State<GetVerifyNumber> {
                 height: 20,
               ),
               TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Provider.of<CounsellingProvider>(context, listen: false)
+                            .TypeRole ==
+                        Role.student;
+                    ApiCall.resendOtp(phoneController.text).then((value) {
+                      if (value.success!) {
+                        Fluttertoast.showToast(
+                            msg: value.message!,
+                            fontSize: 20,
+                            backgroundColor: Colour.backgroundColor,
+                            textColor: Colors.white);
+                      }
+                    });
+                  },
                   child: const Text(
                     "Resend OTP",
                     style: TextStyle(
@@ -86,7 +106,9 @@ class _GetCountryState extends State<GetVerifyNumber> {
                 height: 50,
                 width: 200,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(SelectCountry.routeName);
+                  },
                   style: ElevatedButton.styleFrom(
                       shadowColor: Colors.white,
                       backgroundColor: const Color(0xFF212426)),

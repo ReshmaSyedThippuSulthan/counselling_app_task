@@ -1,25 +1,47 @@
+import 'package:counselling_task/OTP_verification/get_otp.dart';
 import 'package:counselling_task/Utils/colors.dart';
+import 'package:counselling_task/api_collection/api.dart';
+import 'package:counselling_task/provider/counselling_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class GetPhoneNumber extends StatefulWidget {
-  const GetPhoneNumber({super.key});
+  final String flag;
+  final String code;
+
+  static const String routeName = "/get_Phone_Number";
+  const GetPhoneNumber({super.key, required this.flag, required this.code});
 
   @override
-  State<GetPhoneNumber> createState() => _GetCountryState();
+  State<GetPhoneNumber> createState() => _GetPhoneNumberState();
 }
 
-class _GetCountryState extends State<GetPhoneNumber> {
+class _GetPhoneNumberState extends State<GetPhoneNumber> {
+  TextEditingController phoneController = TextEditingController();
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    phoneController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colour.backgroundColor,
       appBar: AppBar(
-        leading: const Icon(
-          Icons.arrow_back_ios,
-          color: Colors.white,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          ),
         ),
         backgroundColor: Colour.backgroundColor,
       ),
@@ -59,15 +81,15 @@ class _GetCountryState extends State<GetPhoneNumber> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const Image(
-                        image: AssetImage("assets/images/img 1.png"),
-                        fit: BoxFit.fill,
-                        height: 30,
+                      SvgPicture.network(
+                        widget.flag,
                         width: 50,
+                        height: 25,
+                        fit: BoxFit.cover,
                       ),
                       const SizedBox(width: 20),
-                      const Text("+91",
-                          style: TextStyle(
+                      Text(widget.code,
+                          style: const TextStyle(
                               fontSize: 18,
                               color: Colors.white,
                               fontWeight: FontWeight.bold)),
@@ -78,9 +100,10 @@ class _GetCountryState extends State<GetPhoneNumber> {
                         child: SizedBox(
                           height: 45,
                           child: TextField(
+                            controller: phoneController,
                             keyboardType: TextInputType.number,
                             inputFormatters: [
-                              LengthLimitingTextInputFormatter(10)
+                              FilteringTextInputFormatter.digitsOnly
                             ],
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 18),
@@ -108,7 +131,24 @@ class _GetCountryState extends State<GetPhoneNumber> {
                 height: 50,
                 width: 200,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // if (phoneController.text.isNotEmpty) {
+                    //   print(
+                    //       "role${Provider.of<CounsellingProvider>(context, listen: false).TypeRole == Role.student}");
+                    //   if (Provider.of<CounsellingProvider>(context,
+                    //               listen: false)
+                    //           .TypeRole ==
+                    //       Role.student) {
+                    //     ApiCall.studentLogin(widget.code, phoneController.text)
+                    //         .then((value) {
+                    //       print("statuscode${value.statusCode}");
+                    //       if (value.success!) {
+                    Navigator.of(context).pushNamed(GetVerifyNumber.routeName);
+                    //       }
+                    //     });
+                    //   }
+                    // }
+                  },
                   style: ElevatedButton.styleFrom(
                       shadowColor: Colors.white,
                       backgroundColor: const Color(0xFF212426)),

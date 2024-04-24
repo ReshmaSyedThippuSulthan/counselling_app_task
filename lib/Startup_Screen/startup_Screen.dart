@@ -1,9 +1,12 @@
-import 'package:flutter/cupertino.dart';
+import 'package:counselling_task/OTP_verification/get_country.dart';
+import 'package:counselling_task/provider/counselling_provider.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
+
+import 'package:provider/provider.dart';
 
 class StartupScreen extends StatefulWidget {
+  static const String routeName = "/startupScreen";
   const StartupScreen({super.key});
 
   @override
@@ -16,7 +19,7 @@ class _StartupScreenState extends State<StartupScreen> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      //  backgroundColor: Image.asset("assets/images/img 1.png").color,
+      backgroundColor: Image.asset("assets/images/startup_bg.png").color,
       body: Column(
         children: [
           Stack(
@@ -28,7 +31,7 @@ class _StartupScreenState extends State<StartupScreen> {
                 width: screenWidth,
                 decoration: const BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage("assets/images/img 1.png"),
+                        image: AssetImage("assets/images/startup_bg.png"),
                         fit: BoxFit.fill)),
                 child: const Column(children: []),
               ),
@@ -59,43 +62,61 @@ class _StartupScreenState extends State<StartupScreen> {
                     const Text("Please select your role to get registered",
                         style: TextStyle(fontSize: 15, color: Colors.white)),
                     const SizedBox(height: 5),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: 150,
-                              width: 170,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Colors.black45, width: 5),
-                                  //color: Colors.black,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(20)),
-                                  image: const DecorationImage(
-                                      image:
-                                          AssetImage("assets/images/img 2.png"),
-                                      fit: BoxFit.fill)),
+                    Consumer<CounsellingProvider>(
+                      builder: (context, value, child) => Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            InkWell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 150,
+                                  width: 170,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Colors.black45, width: 5),
+                                      //color: Colors.black,
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(20)),
+                                      image: const DecorationImage(
+                                          image: AssetImage(
+                                              "assets/images/student.png"),
+                                          fit: BoxFit.fill)),
+                                ),
+                              ),
+                              onTap: () {
+                                value.setRole(Role.student);
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      const GetCountryScreen(),
+                                ));
+                              },
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                                height: 150,
-                                width: 170,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Colors.black45, width: 5),
-                                    //    color: Colors.black,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(20)),
-                                    image: const DecorationImage(
-                                        image: AssetImage(
-                                            "assets/images/img 3.png"),
-                                        fit: BoxFit.fill))),
-                          ),
-                        ]),
+                            InkWell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                    height: 150,
+                                    width: 170,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.black45, width: 5),
+                                        //    color: Colors.black,
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(20)),
+                                        image: const DecorationImage(
+                                            image: AssetImage(
+                                                "assets/images/Agent.png"),
+                                            fit: BoxFit.fill))),
+                              ),
+                              onTap: () {
+                                value.setRole(Role.agent);
+                                Navigator.of(context)
+                                    .pushNamed(GetCountryScreen.routeName);
+                              },
+                            ),
+                          ]),
+                    ),
                     // const SizedBox(
                     //   height: 20,
                     // ),
